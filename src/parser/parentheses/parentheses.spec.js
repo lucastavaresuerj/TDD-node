@@ -1,4 +1,6 @@
 import parenthesesParser from "./parentheses";
+import MatchingNumberError from "./matchingNumber.error";
+import MatchingSeparatorError from "./matchingSeparator.error";
 
 describe("Parentheses", () => {
   const testData = {
@@ -31,12 +33,34 @@ describe("Parentheses", () => {
         ],
       },
     ],
+    error: [
+      {
+        input: "17 + (78",
+        error: new MatchingNumberError(),
+      },
+      {
+        input: "17 + (78))",
+        error: new MatchingNumberError(),
+      },
+      {
+        input: "17 + (78}",
+        error: new MatchingSeparatorError("}", ")"),
+      },
+    ],
   };
   it("Should separate in the bigger parentheses", () => {
     const { pass } = testData;
 
     pass.map(({ input, result }) => {
       expect(parenthesesParser(input)).toEqual(result);
+    });
+  });
+
+  it("Should throw error when the parentheses dont match", () => {
+    const { error } = testData;
+
+    error.map(({ input, error }) => {
+      expect(() => parenthesesParser(input)).toThrow(error.message);
     });
   });
 });

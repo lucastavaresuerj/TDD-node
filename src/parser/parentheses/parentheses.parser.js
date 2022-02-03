@@ -1,7 +1,7 @@
 import MatchingNumberError from "./matchingNumber.error.js";
 import MatchingSeparatorError from "./matchingSeparator.error.js";
 
-function parenthesesParser(operation = "") {
+function parentheses(operation = "") {
   const separatorBlocks = { "(": ")", "[": "]", "{": "}" };
   const keys = {
     open: Object.keys(separatorBlocks),
@@ -63,4 +63,4 @@ function parenthesesParser(operation = "") {
   return parsed;
 }
 
-export default parenthesesParser;
+export default parentheses;

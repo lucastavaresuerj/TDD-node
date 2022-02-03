@@ -1,6 +1,6 @@
-import parenthesesParser from "./parentheses";
-import MatchingNumberError from "./matchingNumber.error";
-import MatchingSeparatorError from "./matchingSeparator.error";
+import parentheses from "./parentheses.parser.js";
+import MatchingNumberError from "./matchingNumber.error.js";
+import MatchingSeparatorError from "./matchingSeparator.error.js";
 
 describe("Parentheses", () => {
   const testData = {
@@ -52,7 +52,7 @@ describe("Parentheses", () => {
     const { pass } = testData;
 
     pass.map(({ input, result }) => {
-      expect(parenthesesParser(input)).toEqual(result);
+      expect(parentheses(input)).toEqual(result);
     });
   });
 
@@ -60,7 +60,7 @@ describe("Parentheses", () => {
     const { error } = testData;
 
     error.map(({ input, error }) => {
-      expect(() => parenthesesParser(input)).toThrow(error.message);
+      expect(() => parentheses(input)).toThrow(error.message);
     });
   });
 });

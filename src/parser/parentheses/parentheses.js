@@ -1,3 +1,6 @@
+import MatchingNumberError from "./matchingNumber.error.js";
+import MatchingSeparatorError from "./matchingSeparator.error.js";
+
 function parenthesesParser(operation = "") {
   const separatorBlocks = { "(": ")", "[": "]", "{": "}" };
   const keys = {
@@ -9,7 +12,6 @@ function parenthesesParser(operation = "") {
   const parsed = operation.split("").reduce(
     (acc, value, index) => {
       const accIndex = acc.length - 1;
-
       if (keys.open.includes(value)) {
         const pileLength = parenthesesPile.length;
         parenthesesPile.push(value);
@@ -26,9 +28,13 @@ function parenthesesParser(operation = "") {
       }
       if (keys.close.includes(value)) {
         const openSeparator = parenthesesPile.pop();
+        if (typeof openSeparator == "undefined") {
+          throw new MatchingNumberError();
+        }
         if (value != separatorBlocks[openSeparator]) {
-          throw new Error(
-            "Matching close separator different from the open separator"
+          throw new MatchingSeparatorError(
+            value,
+            separatorBlocks[openSeparator]
           );
         }
         if (parenthesesPile.length == 0) {
@@ -51,7 +57,7 @@ function parenthesesParser(operation = "") {
   );
 
   if (parenthesesPile.length) {
-    throw new Error("Number of parentheses did not match");
+    throw new MatchingNumberError();
   }
 
   return parsed;

@@ -25,7 +25,7 @@ describe("Parser", () => {
       },
       {
         input: "1 - (2 - 3)",
-        result: 1,
+        result: 2,
       },
     ],
   };

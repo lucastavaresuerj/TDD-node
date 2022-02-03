@@ -6,8 +6,6 @@ import sub from "../math/arithmetic/subtraction/sub.js";
 
 import parentheses from "./parentheses/parentheses.parser.js";
 
-// console.log(parser("1 - 1"));
-
 function parser(operation) {
   const isNumber = /^\d+(\.\d+)?$/g.test(operation);
   if (isNumber) {

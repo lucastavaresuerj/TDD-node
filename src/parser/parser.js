@@ -6,6 +6,8 @@ import sub from "../math/arithmetic/subtraction/sub.js";
 
 import parentheses from "./parentheses/parentheses.parser.js";
 
+// console.log(parser("1 - 1"));
+
 function parser(operation) {
   const isNumber = /^\d+(\.\d+)?$/g.test(operation);
   if (isNumber) {
@@ -23,21 +25,13 @@ function parser(operation) {
   const parseAdd = addParser(parsedParentheses);
 
   if (parseAdd.length == 2) {
-    return parseAdd.reduce((acc, operator, index) => {
-      if (index == 0) {
-        return add(acc, parseFloat(operator));
-      } else {
-        return add(acc, parser(operator));
-      }
-    }, 0);
+    return parseAdd.reduce((acc, operator) => {
+      return add(parseFloat(acc), parser(operator));
+    });
   } else {
-    return subParser(parsedParentheses).reduce((acc, operator, index) => {
-      if (index == 0) {
-        return sub(acc, parseFloat(operator));
-      } else {
-        return sub(acc, parser(operator));
-      }
-    }, 0);
+    return subParser(parsedParentheses).reduce((acc, operator) => {
+      return sub(parseFloat(acc), parser(operator));
+    });
   }
 }
 
